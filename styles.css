@@ -1,0 +1,132 @@
+@font-face {
+  font-family: 'Saiyan-Sans';
+  src: url('./Saiyan-Sans.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.container-img{
+  display: grid;
+  grid-template-columns: repeat(1,1fr);
+  gap: 40px;
+  margin: 40px;
+  margin-top: 20px;
+}
+.character-cont{
+  background-color: rgba(55, 0, 207, 0.553);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+
+}
+.backgroundCont{
+  width: 100%;
+  background-image: url(./desktop-wallpaper-planet-namek.jpg);
+  background-position: center;
+  background-size: cover;
+  border-radius: 10px;
+}
+.imagenCont{
+  width: 100%;
+  height: 420px;
+  position: relative;
+  border-radius: 10px;
+}
+.imagenCont:hover{
+  transition: 300ms;
+   backdrop-filter: blur(10px); /* Desenfocar el fondo */
+  -webkit-backdrop-filter: blur(10px); /* Soporte para navegadores WebKit */
+}
+.imagenCont img{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  top: -30px;
+  height: 450px;
+}
+.character-cont:hover{
+  transition: 300ms;
+  transform: scale(1.1);
+  z-index: 100;
+}
+body{
+  margin: 0;
+  background: url(./background.jpg) no-repeat center center fixed;
+  background-size: cover;
+  backdrop-filter: blur(5px); 
+  -webkit-backdrop-filter: blur(5px);
+}
+#logo{
+  width: 40%;
+  display: flex;
+  margin: 0 auto;
+}
+.informacion{
+  font-family: 'Saiyan-Sans';
+  font-size: 40px;
+  color: rgb(255, 217, 0);
+  text-shadow: 
+  -1px -1px 0 #000,  
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000; 
+  text-align: center;
+}
+.informacion span{
+  color: red;
+  text-shadow: 
+  -1px -1px 0 #000,  
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000; 
+}
+.difuminado{
+  transition: 300ms;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.516);
+  position: absolute;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.cuadro_informacion{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  width: 50%;
+  height: 50%;
+  margin: 0 auto;
+  background-color: rgba(82, 82, 82, 0.847) ;
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  color: white;
+}
+.cuadro_informacion :first-child{
+  font-weight: bold;
+  font-size: 30px;
+}
+@media screen and (min-width:520px) and (max-width:1120px){
+  .container-img{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 40px;
+    margin: 100px;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (min-width:1120px){
+  .container-img{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 40px;
+    margin: 200px;
+    margin-top: 20px;
+  }
+}
