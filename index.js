@@ -9,21 +9,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const containerImg = document.querySelector(".container-img");
 const body = document.querySelector("body");
+let currentPage = 1;
+const charactersPerPage = 8;
 document.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield getAllCharacters();
+    yield loadCharacters(currentPage);
+    createPaginationButtons();
+}));
+const getAllCharacters = (page, limit) => __awaiter(void 0, void 0, void 0, function* () {
+    const response = yield fetch(`https://dragonball-api.com/api/characters?page=${page}&limit=${limit}`);
+    let data = yield response.json();
+    return data.items;
+});
+const loadCharacters = (page) => __awaiter(void 0, void 0, void 0, function* () {
+    containerImg.innerHTML = '';
+    const data = yield getAllCharacters(page, charactersPerPage);
     data.forEach((character) => {
         console.log(character);
-        // Crear contenedor principal para cada personaje
         const characterCont = document.createElement("div");
         characterCont.classList.add("character-cont");
-        // Crear contenedor para la imagen y la información del personaje
         const backgroundCont = document.createElement("div");
         const imagenCont = document.createElement("div");
         const informacion = document.createElement("div");
         backgroundCont.classList.add("backgroundCont");
         imagenCont.classList.add("imagenCont");
         informacion.classList.add("informacion");
-        // Crear y asignar elementos para la imagen y la información del personaje
         const name = document.createElement("p");
         const image = document.createElement("img");
         const ki = document.createElement("p");
@@ -41,24 +50,18 @@ document.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, vo
         genero.innerText = `Genero: ${character.gender}`;
         descripcion.innerText = `Descripcion: ${character.description}`;
         afiliacion.innerText = `Afiliacion: ${character.affiliation}`;
-        // Añadir elementos a los contenedores correspondientes
         imagenCont.appendChild(image);
         informacion.appendChild(name);
-        // Añadir contenedores al contenedor principal del personaje
         characterCont.appendChild(backgroundCont);
         backgroundCont.appendChild(imagenCont);
         characterCont.appendChild(informacion);
-        // Añadir contenedor principal del personaje al contenedor principal de la página
         containerImg.appendChild(characterCont);
         characterCont.addEventListener("click", (ev) => {
             ev.preventDefault();
-            // Crear contenedor para la información adicional del personaje
             const difuminado = document.createElement("div");
             const cuadroInformacion = document.createElement("div");
-            // Asignar clases
             difuminado.className = "difuminado";
             cuadroInformacion.className = "cuadro_informacion";
-            // Agregar elementos al cuadro de información
             cuadroInformacion.appendChild(name.cloneNode(true));
             cuadroInformacion.appendChild(ki.cloneNode(true));
             cuadroInformacion.appendChild(maxki.cloneNode(true));
@@ -66,37 +69,45 @@ document.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, vo
             cuadroInformacion.appendChild(genero.cloneNode(true));
             cuadroInformacion.appendChild(descripcion.cloneNode(true));
             cuadroInformacion.appendChild(afiliacion.cloneNode(true));
-            // Agregar cuadro de información al difuminado
             difuminado.appendChild(cuadroInformacion);
-            // Agregar difuminado al body como último hijo
             document.body.appendChild(difuminado);
-            // Establecer estilos CSS para el difuminado
             difuminado.style.position = 'fixed';
             difuminado.style.left = '0';
             difuminado.style.width = '100vw';
             difuminado.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Fondo semi-transparente
-            // Calcular la posición top del difuminado
             const scrollY = window.scrollY || window.pageYOffset;
             const windowHeight = window.innerHeight;
             const difuminadoHeight = difuminado.clientHeight;
-            // Ajustar posición top del difuminado para que aparezca en la parte inferior visible
             difuminado.style.top = `${scrollY + windowHeight - difuminadoHeight}px`;
-            // Deshabilitar scroll del body mientras esté abierto el difuminado
             document.body.style.overflow = 'hidden';
-            // Evento para cerrar el difuminado al hacer clic fuera de él
             difuminado.addEventListener('click', (ev) => {
                 if (ev.target === difuminado) {
                     difuminado.remove();
-                    // Restaurar scroll del body
                     document.body.style.overflow = '';
                 }
             });
         });
     });
-}));
-const getAllCharacters = () => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield fetch("https://dragonball-api.com/api/characters");
-    let data = yield response.json();
-    return data.items;
 });
+const createPaginationButtons = () => {
+    const paginationContainer = document.createElement("div");
+    paginationContainer.className = "pagination-container";
+    const prevButton = document.createElement("button");
+    prevButton.innerText = "Anterior";
+    prevButton.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            loadCharacters(currentPage);
+        }
+    });
+    const nextButton = document.createElement("button");
+    nextButton.innerText = "Siguiente";
+    nextButton.addEventListener("click", () => {
+        currentPage++;
+        loadCharacters(currentPage);
+    });
+    paginationContainer.appendChild(prevButton);
+    paginationContainer.appendChild(nextButton);
+    document.body.appendChild(paginationContainer);
+};
 export {};

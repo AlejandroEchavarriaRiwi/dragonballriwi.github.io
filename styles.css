@@ -5,6 +5,9 @@
   font-style: normal;
 }
 
+html, body{
+  scroll-behavior: smooth;
+}
 
 .container-img{
   display: grid;
@@ -38,8 +41,8 @@
 }
 .imagenCont:hover{
   transition: 300ms;
-   backdrop-filter: blur(10px); /* Desenfocar el fondo */
-  -webkit-backdrop-filter: blur(10px); /* Soporte para navegadores WebKit */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 .imagenCont img{
   position: absolute;
@@ -106,6 +109,21 @@ body{
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   color: white;
+}
+.pagination-container{
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: -150px;
+  margin-bottom: 50px;
+}
+.pagination-container button{
+  border: 0px;
+  background-color: rgba(104, 0, 249, 0.61);
+  padding: 10px 30px;
+  border-radius: 5px;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .cuadro_informacion :first-child{
   font-weight: bold;
